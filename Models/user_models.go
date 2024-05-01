@@ -1,6 +1,6 @@
 package Models
 
-type profile struct {
+type Profile struct {
 	ID       string `json:"id"`
 	Nickname string `json:"nickname"`
 	Email    string `json:"email"`
