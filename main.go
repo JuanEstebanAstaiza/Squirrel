@@ -34,7 +34,7 @@ func main() {
 
 	handler := c.Handler(router)
 	// Iniciar el servidor
-	port := ":8080"
+	port := ":7250"
 	fmt.Println("Servidor escuchando en el puerto", port)
 	log.Fatal(http.ListenAndServe(port, handler))
 

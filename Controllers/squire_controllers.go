@@ -24,7 +24,7 @@ func AddSquire(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 }
 
-func GetSquire(w http.ResponseWriter, r *http.Request) {
+func GetSquire(w http.ResponseWriter, _ *http.Request) {
 	// Obtener las contraseñas de la base de datos
 	passwords, err := Services.GetSquire()
 	if err != nil {
