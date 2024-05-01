@@ -6,7 +6,7 @@ type profile struct {
 	Email    string `json:"email"`
 }
 
-type credentials struct {
+type Credentials struct {
 	Password string `json:"password"`
 	Nickname string `json:"nickname"`
 	Email    string `json:"email"`
