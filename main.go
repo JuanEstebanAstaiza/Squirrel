@@ -19,11 +19,11 @@ func main() {
 		log.Fatal(err)
 	}
 
-	router:=mux.NewRouter()
-	router.HandleFunc("/api/user/register",Controllers.RegisterUser).Methods("POST")
-	router.HandleFunc("/api/user/login",Controllers.LoginUser).Methods("POST")
-	router.HandleFunc("/api/insert-squirrel/AddSquire",Controllers.AddSquire).Methods("POST")
-
+	router := mux.NewRouter()
+	router.HandleFunc("/api/user/register", Controllers.RegisterUser).Methods("POST")
+	router.HandleFunc("/api/user/login", Controllers.LoginUser).Methods("POST")
+	router.HandleFunc("/api/insert-squirrel/AddSquire", Controllers.AddSquire).Methods("POST")
+	router.HandleFunc("/api/view/view-squire", Controllers.GetSquire).Methods("GET")
 
 	// Opciones CORS
 	c := cors.New(cors.Options{
@@ -38,5 +38,4 @@ func main() {
 	fmt.Println("Servidor escuchando en el puerto", port)
 	log.Fatal(http.ListenAndServe(port, handler))
 
-}
 }
