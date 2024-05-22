@@ -7,16 +7,21 @@ import (
 
 //Insertar datos en la base de datos
 
-func AddSquireToDB(squire Models.Squire) error {
-	query := "INSERT INTO mainpage (url,User, password) VALUES (?, ?, ?)"
+func AddSquireToDB(squire Models.Squire) (string, error) {
+	query := "INSERT INTO mainpage (id, user_id, url,User, password) VALUES (?, ?, ?, ?, ?)"
 
-	// Ejecutar la consulta SQL con los valores proporcionados
-	_, err := Utils.DB.Exec(query, squire.Url, squire.Username, squire.Password)
+	squireID, err := Utils.GenerateSquireID()
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	return nil
+	// Ejecutar la consulta SQL con los valores proporcionados
+	_, err = Utils.DB.Exec(query, squireID, squire.UserId, squire.Url, squire.Username, squire.Password)
+	if err != nil {
+		return "", err
+	}
+
+	return squireID, nil
 }
 
 func GetSquire() ([]Models.Squire, error) {

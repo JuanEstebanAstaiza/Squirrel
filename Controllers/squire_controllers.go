@@ -15,12 +15,16 @@ func AddSquire(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = Services.AddSquireToDB(squire)
+	id, err := Services.AddSquireToDB(squire)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
+	if err = json.NewEncoder(w).Encode(id); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 	w.WriteHeader(http.StatusCreated)
 }
 
