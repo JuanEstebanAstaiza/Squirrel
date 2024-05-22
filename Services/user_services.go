@@ -30,20 +30,20 @@ func AuthenticateUser(credentials Models.Credentials) (bool, error) {
 	return true, nil
 }
 
-func RegisterUser(user Models.Credentials) error {
+func RegisterUser(user Models.Credentials) (string, error) {
 	// Generar un ID único para el usuario
 	userID, err := Utils.GenerateUserID()
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	// Insertar el usuario en la base de datos con el ID único generado
 	_, err = Utils.DB.Exec("INSERT INTO users (id, nickname, email, password) VALUES (?, ?, ?, ?)", userID, user.Nickname, user.Email, user.Password)
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	return nil
+	return userID, nil
 }
 
 func LoginUser(credentials Models.Credentials) (*Models.Credentials, error) {
