@@ -2,6 +2,7 @@ package Controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/JuanEstebanAstaiza/Squirrel/Models"
 	"github.com/JuanEstebanAstaiza/Squirrel/Services"
 	"net/http"
@@ -16,10 +17,14 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Registrar al usuario
-	err = Services.RegisterUser(user)
+	id, err := Services.RegisterUser(user)
 	if err != nil {
-		http.Error(w, "Error al registrar el usuario", http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("Error al registrar el usuario: %e", err), http.StatusInternalServerError)
 		return
+	}
+
+	if err = json.NewEncoder(w).Encode(id); err != nil {
+		http.Error(w, fmt.Sprintf("Error al registrar el usuario: %e", err), http.StatusInternalServerError)
 	}
 
 	// Responder con éxito
