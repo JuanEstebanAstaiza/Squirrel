@@ -27,3 +27,27 @@ func FindUserByEmail(email string) (*Models.Profile, error) {
 	// Si se encontró un usuario, lo devolvemos.
 	return &user, nil
 }
+
+func FindSquiresByUserId(user_id string) (*[]Models.Squire, error) {
+	// Consulta a la base de datos para buscar al usuario por su email.
+	query := "SELECT * FROM mainpage WHERE user_id = ?"
+	rows, err := Utils.DB.Query(query, user_id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	// Escanear el resultado de la consulta en una estructura de usuario.
+	var squires []Models.Squire
+	for rows.Next() {
+		var squire Models.Squire
+		if err := rows.Scan(&squire.ID, &squire.UserId, &squire.Url, &squire.Username, &squire.Password); err != nil {
+			return nil, err
+		}
+		squires = append(squires, squire)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return &squires, nil
+}
