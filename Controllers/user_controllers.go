@@ -11,6 +11,7 @@ import (
 func RegisterUser(w http.ResponseWriter, r *http.Request) {
 	var user Models.Credentials
 	err := json.NewDecoder(r.Body).Decode(&user)
+	fmt.Println(user)
 	if err != nil {
 		http.Error(w, "Error al decodificar el cuerpo de la solicitud", http.StatusBadRequest)
 		return
@@ -55,12 +56,16 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 
 	// Si las credenciales son válidas, enviar la información del usuario
 	if userInfo != nil {
+		var userProfile Models.Profile
+		userProfile.ID = userInfo.ID
+		userProfile.Nickname = userInfo.Nickname
+		userProfile.Email = userInfo.Email
 		// Escribir encabezado de respuesta exitosa
 		w.WriteHeader(http.StatusOK)
 		// Codificar el mensaje de "Acceso concedido" junto con los detalles del usuario
 		response := map[string]interface{}{
-			"message": "Acceso concedido",
-			"user":    userInfo,
+			"message":  "Acceso concedido",
+			"userInfo": userProfile,
 		}
 		// Codificar la respuesta en formato JSON y enviarla
 		json.NewEncoder(w).Encode(response)

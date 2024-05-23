@@ -22,8 +22,10 @@ func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/api/user/register", Controllers.RegisterUser).Methods("POST")
 	router.HandleFunc("/api/user/login", Controllers.LoginUser).Methods("POST")
-	router.HandleFunc("/api/insert-squirrel/AddSquire", Controllers.AddSquire).Methods("POST")
-	router.HandleFunc("/api/view/view-squire", Controllers.GetSquire).Methods("GET")
+	router.HandleFunc("/api/squire/insert-squirrel/AddSquire", Controllers.AddSquire).Methods("POST")
+	router.HandleFunc("/api/squire/view/view-squire/{userID}", Controllers.GetSquiresByUser).Methods("GET")
+	router.HandleFunc("/api/squire/edit-squirrel/EditSquire", Controllers.EditSquire).Methods("PUT")
+	router.HandleFunc("/api/squire/delete-squirrel/DeleteSquire/{squireID}", Controllers.DeleteSquire).Methods("DELETE")
 
 	// Opciones CORS
 	c := cors.New(cors.Options{
